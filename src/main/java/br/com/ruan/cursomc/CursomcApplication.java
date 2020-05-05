@@ -1,5 +1,7 @@
 package br.com.ruan.cursomc;
 
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Arrays;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,13 +14,20 @@ import br.com.ruan.cursomc.model.CidadeModel;
 import br.com.ruan.cursomc.model.ClienteModel;
 import br.com.ruan.cursomc.model.EnderecoModel;
 import br.com.ruan.cursomc.model.EstadoModel;
+import br.com.ruan.cursomc.model.PagamentoComBoletoModel;
+import br.com.ruan.cursomc.model.PagamentoComCartaoModel;
+import br.com.ruan.cursomc.model.PagamentoModel;
+import br.com.ruan.cursomc.model.PedidoModel;
 import br.com.ruan.cursomc.model.ProdutoModel;
+import br.com.ruan.cursomc.model.enums.EstadoPagamento;
 import br.com.ruan.cursomc.model.enums.TipoCliente;
 import br.com.ruan.cursomc.repository.CategoriaRepository;
 import br.com.ruan.cursomc.repository.CidadeRepository;
 import br.com.ruan.cursomc.repository.ClienteRepository;
 import br.com.ruan.cursomc.repository.EnderecoRepository;
 import br.com.ruan.cursomc.repository.EstadoRepository;
+import br.com.ruan.cursomc.repository.PagamentoRepository;
+import br.com.ruan.cursomc.repository.PedidoRepository;
 import br.com.ruan.cursomc.repository.ProdutoRepository;
 
 @SpringBootApplication
@@ -46,6 +55,11 @@ public class CursomcApplication implements CommandLineRunner{
 	@Autowired
 	private EnderecoRepository enderecoRepository;
 	
+	@Autowired
+	private PedidoRepository pedidoRepository;
+	
+	@Autowired
+	private PagamentoRepository pagamentoRepository;
 	
 	@Override
 	public void run(String... args) throws Exception {
@@ -93,6 +107,23 @@ public class CursomcApplication implements CommandLineRunner{
 		
 		clienteRepository.saveAll(Arrays.asList(cli1));
 		enderecoRepository.saveAll(Arrays.asList(e1, e2));
+		
+		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm");
+		PedidoModel ped1 = new PedidoModel(null, sdf.parse("30/09/2020 10:36"), cli1, e1);
+		PedidoModel ped2 = new PedidoModel(null, sdf.parse("10/10/2020 18:30"), cli1, e2);
+		
+		PagamentoModel pagto1 = new PagamentoComCartaoModel(null, EstadoPagamento.QUITADO, ped1, 6);
+		ped1.setPagamento(pagto1);
+		
+		PagamentoModel pagto2 = new PagamentoComBoletoModel(null, EstadoPagamento.PENDENTE, ped2, sdf.parse("17/11/2020 18:00"), null);
+		ped2.setPagamento(pagto2);
+		
+		cli1.getPedidos().addAll(Arrays.asList(ped1, ped2));
+		
+		pedidoRepository.saveAll(Arrays.asList(ped1, ped2));
+		pagamentoRepository.saveAll(Arrays.asList(pagto1, pagto2));
+		clienteRepository.save(cli1);
+		
 	}
 
 }
