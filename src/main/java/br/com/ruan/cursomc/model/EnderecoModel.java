@@ -11,6 +11,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 @Entity
 public class EnderecoModel implements Serializable{
@@ -30,6 +31,7 @@ public class EnderecoModel implements Serializable{
 	@JoinColumn(name = "CIDADE_ID")
 	private CidadeModel cidade;
 	
+	@JsonBackReference
 	@ManyToOne()
 	@JoinColumn(name = "CLIENTE_ID")
 	private ClienteModel cliente;
