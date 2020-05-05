@@ -12,6 +12,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 @Entity
 public class ProdutoModel implements Serializable {
 
@@ -25,6 +27,8 @@ public class ProdutoModel implements Serializable {
 	
 	
 	//Criando a teceira tabela para normalizar o muitos para muitos
+	//Com esse Json, informamos que não será visto na visualização, já que referenciamos o mesmo no outro model
+	@JsonBackReference
 	@ManyToMany
 	@JoinTable(name = "PRODUTO_CATEGORIA",
 	joinColumns = @JoinColumn(name="produto_id"), 

@@ -26,8 +26,10 @@ public class CategoriaResource {
 	@GetMapping("/{id}")
 	public ResponseEntity<?> findById(@PathVariable Integer id) {
 		CategoriaModel obj = service.buscar(id);
-		
 		return ResponseEntity.ok().body(obj);
+		
+		
+		
 	}
 	
 }
