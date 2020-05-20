@@ -2,8 +2,9 @@ package br.com.ruan.cursomc.model;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
-
+import java.util.Set;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -11,6 +12,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 
@@ -25,6 +27,8 @@ public class ProdutoModel implements Serializable {
 	private String nome;
 	private double preco;
 	
+	@OneToMany(mappedBy = "id.produto")
+	private Set<ItemPedidoModel> itens = new HashSet<>();
 	
 	//Criando a teceira tabela para normalizar o muitos para muitos
 	//Com esse Json, informamos que não será visto na visualização, já que referenciamos o mesmo no outro model
@@ -45,6 +49,16 @@ public class ProdutoModel implements Serializable {
 		this.nome = nome;
 		this.preco = preco;
 	}
+	
+	public List<PedidoModel> getPedidos(){
+		List<PedidoModel> lista = new ArrayList<>();
+		
+		for (ItemPedidoModel elem : itens) {
+			lista.add(elem.getPedido());
+		}
+		return lista;
+	}
+	
 
 	public Integer getId() {
 		return id;
@@ -77,6 +91,19 @@ public class ProdutoModel implements Serializable {
 	public void setCategorias(List<CategoriaModel> categorias) {
 		this.categorias = categorias;
 	}
+
+
+	public Set<ItemPedidoModel> getItens() {
+		return itens;
+	}
+
+
+
+	public void setItens(Set<ItemPedidoModel> itens) {
+		this.itens = itens;
+	}
+	
+	
 
 	@Override
 	public int hashCode() {

@@ -3,7 +3,9 @@ package br.com.ruan.cursomc.model;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
@@ -12,6 +14,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 
 @Entity
@@ -30,6 +33,9 @@ public class PedidoModel implements Serializable{
 	@ManyToOne
 	@JoinColumn(name = ("CLIENTE_ID"))
 	private ClienteModel cliente;
+	
+	@OneToMany(mappedBy = "id.pedido")
+	private Set<ItemPedidoModel> itens = new HashSet<>();
 	
 	///private List<ProdutoModel> itens = new ArrayList<>();
 	
@@ -51,7 +57,14 @@ public class PedidoModel implements Serializable{
 		this.enderecoDeEntrega = enderecoDeEntrega;
 	}
 
-
+	public List<ProdutoModel> getProdutos(){
+		List<ProdutoModel> lista = new ArrayList<>();
+		
+		for (ItemPedidoModel elem : itens) {
+			lista.add(elem.getProduto());
+		}
+		return lista;
+	}
 
 	public Integer getId() {
 		return id;
@@ -84,6 +97,18 @@ public class PedidoModel implements Serializable{
 		this.pagamento = pagamento;
 	}
 
+
+	public Set<ItemPedidoModel> getItens() {
+		return itens;
+	}
+
+
+
+	public void setItens(Set<ItemPedidoModel> itens) {
+		this.itens = itens;
+	}
+	
+	
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -108,6 +133,6 @@ public class PedidoModel implements Serializable{
 			return false;
 		return true;
 	}
-	
-	
+
+
 }

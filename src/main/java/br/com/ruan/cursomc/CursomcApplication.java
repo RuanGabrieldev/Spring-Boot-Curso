@@ -14,6 +14,7 @@ import br.com.ruan.cursomc.model.CidadeModel;
 import br.com.ruan.cursomc.model.ClienteModel;
 import br.com.ruan.cursomc.model.EnderecoModel;
 import br.com.ruan.cursomc.model.EstadoModel;
+import br.com.ruan.cursomc.model.ItemPedidoModel;
 import br.com.ruan.cursomc.model.PagamentoComBoletoModel;
 import br.com.ruan.cursomc.model.PagamentoComCartaoModel;
 import br.com.ruan.cursomc.model.PagamentoModel;
@@ -26,6 +27,7 @@ import br.com.ruan.cursomc.repository.CidadeRepository;
 import br.com.ruan.cursomc.repository.ClienteRepository;
 import br.com.ruan.cursomc.repository.EnderecoRepository;
 import br.com.ruan.cursomc.repository.EstadoRepository;
+import br.com.ruan.cursomc.repository.ItemPedidoRepository;
 import br.com.ruan.cursomc.repository.PagamentoRepository;
 import br.com.ruan.cursomc.repository.PedidoRepository;
 import br.com.ruan.cursomc.repository.ProdutoRepository;
@@ -60,6 +62,9 @@ public class CursomcApplication implements CommandLineRunner{
 	
 	@Autowired
 	private PagamentoRepository pagamentoRepository;
+	
+	@Autowired
+	private ItemPedidoRepository itemPedidoRepository;
 	
 	@Override
 	public void run(String... args) throws Exception {
@@ -124,6 +129,20 @@ public class CursomcApplication implements CommandLineRunner{
 		pagamentoRepository.saveAll(Arrays.asList(pagto1, pagto2));
 		clienteRepository.save(cli1);
 		
+		
+		ItemPedidoModel ip1 = new ItemPedidoModel(0.0, 1, 2000.0, ped1, p1);
+		ItemPedidoModel ip2 = new ItemPedidoModel(0.0, 2, 80.0, ped1, p3);
+		ItemPedidoModel ip3 = new ItemPedidoModel(100.0, 1, 800.0, ped2, p1);
+		
+		ped1.getItens().addAll(Arrays.asList(ip1, ip2));
+		ped2.getItens().addAll(Arrays.asList(ip3));
+		
+		p1.getItens().addAll(Arrays.asList(ip1));
+		p2.getItens().addAll(Arrays.asList(ip3));
+		p3.getItens().addAll(Arrays.asList(ip2));
+		
+		
+		itemPedidoRepository.saveAll(Arrays.asList(ip1, ip2, ip3));
 	}
 
 }
