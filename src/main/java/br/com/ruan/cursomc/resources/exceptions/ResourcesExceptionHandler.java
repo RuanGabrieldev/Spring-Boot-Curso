@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
 import br.com.ruan.cursomc.services.exceptions.ObjetoNaoEncontradoException;
+import br.com.ruan.cursomc.services.exceptions.ViolacaoIntegridadeDadosException;
 
 @ControllerAdvice
 public class ResourcesExceptionHandler {
@@ -19,6 +20,12 @@ public class ResourcesExceptionHandler {
 		return ResponseEntity.status(HttpStatus.NOT_FOUND.value()).body(err);
 	}
 	
+	@ExceptionHandler(ViolacaoIntegridadeDadosException.class)
+	public ResponseEntity<StandardError> dataIntegrity(ViolacaoIntegridadeDadosException e, HttpServletRequest request){
+		
+		StandardError err = new StandardError(e.getMessage(), HttpStatus.BAD_REQUEST.value(), System.currentTimeMillis());
+		return ResponseEntity.status(HttpStatus. BAD_REQUEST.value()).body(err);
+	}
 	
 
 }
