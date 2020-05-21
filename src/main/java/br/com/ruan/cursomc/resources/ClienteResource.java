@@ -7,9 +7,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import br.com.ruan.cursomc.model.CategoriaModel;
 import br.com.ruan.cursomc.model.ClienteModel;
-import br.com.ruan.cursomc.repository.ClienteRepository;
 import br.com.ruan.cursomc.services.ClienteService;
 
 @RestController

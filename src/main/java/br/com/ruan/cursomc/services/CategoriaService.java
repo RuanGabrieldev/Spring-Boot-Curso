@@ -24,6 +24,10 @@ public class CategoriaService {
 	}
 	
 	
-	
+	public CategoriaModel insert(CategoriaModel obj) {
+		//garantindo que é um objeto novo
+		obj.setId(null);
+		return repo.save(obj);
+	}
 	
 }

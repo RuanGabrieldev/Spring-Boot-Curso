@@ -10,8 +10,6 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 
-import com.fasterxml.jackson.annotation.JsonManagedReference;
-
 
 @Entity
 public class CategoriaModel implements Serializable{
@@ -25,7 +23,7 @@ public class CategoriaModel implements Serializable{
 	
 	//O Json serve para corrigir o erro de looping na busca de objetos relacionados
 	//com essa tag, informamos que este objeto que será apresentado 
-	@JsonManagedReference
+	
 	@ManyToMany(mappedBy = "categorias")
 	private List<ProdutoModel> produtos = new ArrayList<>();
 	
