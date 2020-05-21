@@ -16,7 +16,7 @@ public class CategoriaService {
 	private CategoriaRepository repo;
 	
 	
-	public CategoriaModel buscar(Integer id) {
+	public CategoriaModel find(Integer id) {
 		
 		Optional<CategoriaModel> obj = repo.findById(id);
 		return obj.orElseThrow(() -> 
@@ -30,4 +30,10 @@ public class CategoriaService {
 		return repo.save(obj);
 	}
 	
+	
+	public CategoriaModel update(CategoriaModel obj){
+		
+		find(obj.getId());
+		return repo.save(obj);
+	}
 }
