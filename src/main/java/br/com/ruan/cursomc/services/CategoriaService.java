@@ -1,5 +1,6 @@
 package br.com.ruan.cursomc.services;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,6 +26,12 @@ public class CategoriaService {
 			new ObjetoNaoEncontradoException("Objeto não encontrado! Id: " + id + ", Tipo: "+ CategoriaModel.class.getName()));
 	}
 	
+	public List<CategoriaModel> findAll() {
+		
+		return repo.findAll();
+	}
+	
+	
 	
 	public CategoriaModel insert(CategoriaModel obj) {
 		//garantindo que é um objeto novo
@@ -47,7 +54,11 @@ public class CategoriaService {
 		} catch (DataIntegrityViolationException e) {
 			throw new ViolacaoIntegridadeDadosException("Não é possível excluir uma categoria que possuí produtos");
 		}
-		
-		 
-	}                           
+	}    
+	
+	
+	
+	
+	
+	
 }
