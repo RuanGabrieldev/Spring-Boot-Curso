@@ -2,6 +2,10 @@ package br.com.ruan.cursomc.dto;
 
 import java.io.Serializable;
 
+import javax.validation.constraints.NotEmpty;
+
+import org.hibernate.validator.constraints.Length;
+
 import br.com.ruan.cursomc.model.CategoriaModel;
 
 public class CategoriaDTO implements Serializable {
@@ -9,6 +13,9 @@ public class CategoriaDTO implements Serializable {
 	private static final long serialVersionUID = 1L;
 	
 	private Integer id;
+	
+	@NotEmpty(message = "Preenchimento Obrigatório")
+	@Length(min = 5, max = 80, message = "O tamanho deve ser entre 5 a 80 characteres")
 	private String nome;
 	
 	public CategoriaDTO() {
@@ -21,6 +28,7 @@ public class CategoriaDTO implements Serializable {
 		this.nome = obj.getNome();
 	}
 
+	
 	public Integer getId() {
 		return id;
 	}

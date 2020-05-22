@@ -10,7 +10,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort.Direction;
 import org.springframework.stereotype.Service;
 
-
+import br.com.ruan.cursomc.dto.CategoriaDTO;
 import br.com.ruan.cursomc.model.CategoriaModel;
 import br.com.ruan.cursomc.repository.CategoriaRepository;
 import br.com.ruan.cursomc.services.exceptions.ObjetoNaoEncontradoException;
@@ -68,6 +68,9 @@ public class CategoriaService {
 		
 	}
 	
+	public CategoriaModel fromDTO(CategoriaDTO objDTO) {
+		return new CategoriaModel(objDTO.getId(), objDTO.getNome());
+	}	
 	
 	
 }
