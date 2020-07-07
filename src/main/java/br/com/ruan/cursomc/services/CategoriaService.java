@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 
 import br.com.ruan.cursomc.dto.CategoriaDTO;
 import br.com.ruan.cursomc.model.CategoriaModel;
+import br.com.ruan.cursomc.model.ClienteModel;
 import br.com.ruan.cursomc.repository.CategoriaRepository;
 import br.com.ruan.cursomc.services.exceptions.ObjetoNaoEncontradoException;
 import br.com.ruan.cursomc.services.exceptions.ViolacaoIntegridadeDadosException;
@@ -43,11 +44,11 @@ public class CategoriaService {
 		return repo.save(obj);
 	}
 	
-	
 	public CategoriaModel update(CategoriaModel obj){
 		
-		find(obj.getId());
-		return repo.save(obj);
+		CategoriaModel newObj = find(obj.getId());
+		updateData(newObj, obj);
+		return repo.save(newObj);
 	}
 	
 	public void delete(Integer id) {
@@ -72,5 +73,8 @@ public class CategoriaService {
 		return new CategoriaModel(objDTO.getId(), objDTO.getNome());
 	}	
 	
+	private void updateData(CategoriaModel newObj, CategoriaModel obj) {
+		newObj.setNome(obj.getNome());
+	}
 	
 }
