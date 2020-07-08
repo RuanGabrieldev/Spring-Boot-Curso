@@ -22,6 +22,8 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import br.com.ruan.cursomc.dto.CategoriaDTO;
 import br.com.ruan.cursomc.dto.ClienteDTO;
+import br.com.ruan.cursomc.dto.ClienteNewDTO;
+import br.com.ruan.cursomc.model.CategoriaModel;
 import br.com.ruan.cursomc.model.ClienteModel;
 import br.com.ruan.cursomc.model.ClienteModel;
 import br.com.ruan.cursomc.services.ClienteService;
@@ -39,6 +41,15 @@ public class ClienteResource {
 		return ResponseEntity.ok().body(cliente);		
 	} 
 	
+	@PostMapping()
+	public ResponseEntity<Void> insert(@Valid @RequestBody ClienteNewDTO objDTO){
+		ClienteModel obj = service.insert(service.fromDTO(objDTO));
+		
+		URI uri = ServletUriComponentsBuilder.fromCurrentRequest()
+				.path("/{id}").buildAndExpand(obj.getId()).toUri();
+		
+		return ResponseEntity.created(uri).build();
+	}
 	
 	
 	@GetMapping
@@ -76,5 +87,8 @@ public class ClienteResource {
 		
 		return ResponseEntity.ok().body(objs);
 	}
+	
+	
+	
 	
 }
